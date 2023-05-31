@@ -5,6 +5,11 @@
     .border: 1px solid limegreen;
 }
 
+@font-face {
+    font-family: tackyshoes;
+    src: url(fonts/tackyshoes.otf);
+}
+
 body {
     height: 100vh;
     display: flex;
@@ -14,6 +19,12 @@ body {
     background-color: #fbbf24;
     gap: 2em;
     margin-top: 3em;
+}
+
+h1 {
+    font-family: tackyshoes;
+    font-size: 5em;
+    color: #f87171;
 }
 
 .board {
