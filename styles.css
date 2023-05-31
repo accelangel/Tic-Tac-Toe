@@ -9,9 +9,11 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     background-color: #fbbf24;
+    gap: 2em;
+    margin-top: 3em;
 }
 
 .board {
@@ -29,4 +31,12 @@ body {
 .board .gameTile {
     background-color: #bae6fd;
     border-radius: 0.25em;
+}
+
+.infoContainer {
+    display: flex;
+}
+
+.infoContainer span {
+    font-weight: bold;
 }
