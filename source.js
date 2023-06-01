@@ -14,6 +14,7 @@ const module = (function () {
             let tile = {};
             tile.tile = `tile${t}`;
             tile.value = null;
+            tile.taken = false;
             board.push(tile);
         };
         return { board };
@@ -23,10 +24,10 @@ const module = (function () {
 
     const populateBoard = function () {
         const board = document.querySelector('.board');
-        for (tile of gameboard.board) {
+        for (obj of gameboard.board) {
             let tileElement = document.createElement('div');
             tileElement.classList.add('gameTile');
-            tileElement.classList.add(tile.tile);
+            tileElement.classList.add(obj.tile);
             board.append(tileElement);
         };
     };
