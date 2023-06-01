@@ -10,7 +10,7 @@
 const module = (function () {
     const createBoard = function () {
         const board = [];
-        for (t = 0; t < 9; t++) {
+        for (t = 1; t < 10; t++) {
             let tile = {};
             tile.tile = `tile${t}`;
             tile.value = null;
@@ -21,8 +21,20 @@ const module = (function () {
 
     let gameboard = createBoard();
 
+    const populateBoard = function () {
+        const board = document.querySelector('.board');
+        for (tile of gameboard.board) {
+            let tileElement = document.createElement('div');
+            tileElement.classList.add('gameTile');
+            tileElement.classList.add(tile.tile);
+            board.append(tileElement);
+        };
+    };
+
+    populateBoard()
+
     return {
-        createBoard, gameboard
+        createBoard, gameboard, populateBoard
     };
 
 })();
