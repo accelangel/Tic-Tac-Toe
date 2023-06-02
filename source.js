@@ -32,7 +32,22 @@ const module = (function () {
         };
     };
 
-    populateBoard()
+    const eventHandler = function (target) {
+        console.log(target);
+    }
+
+    const eventCreator = function () {
+        for (obj of gameboard.board) {
+            let target = document.querySelector(`.${obj.tile}`);
+            let temp = obj;
+            target.addEventListener('click', function () {
+                eventHandler(temp);
+            });
+        };
+    };
+
+    populateBoard();
+    eventCreator();
 
     return {
         createBoard, gameboard, populateBoard
