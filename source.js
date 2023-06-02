@@ -60,29 +60,28 @@ const module = (function () {
 const gameHandler = function (target) {
     // take target.tile and assign it to a variable, like chosenTile
     let chosenTile = target.tile;
-    console.log(chosenTile);
+    //console.log(chosenTile);
     // now you need something to find out whose turn it is
     let playerOne = module.players.playerOne;
     let playerTwo = module.players.playerTwo;
     if (playerOne.myTurn === true) {
-        // okay here a few things need to happen
-        // first playerOneTurn should be set to false, and the opposite for playerTwoTurn
-        // next the selected tile needs to be added into the myTile array for that player
-        // then some kind of update display function needs to be invoked
-        // lets commit here though, thats far enough
-        playerOne.myTurn = false;
-        playerTwo.myTurn = true;
-        playerOne.myTiles.push(chosenTile);
-        console.log('player one move');
-        console.log(target);
+        if (!playerOne.myTiles.includes(chosenTile) && !playerTwo.myTiles.includes(chosenTile)) {
+            playerOne.myTurn = false;
+            playerTwo.myTurn = true;
+            playerOne.myTiles.push(chosenTile);
+            console.log(`player one move, myTiles: ${playerOne.myTiles}`);
+        }
     }
     else {
-        playerTwo.myTurn = false;
-        playerOne.myTurn = true;
-        playerTwo.myTiles.push(chosenTile);
-        console.log('player two move');
-        console.log(target);
+        if (!playerTwo.myTiles.includes(chosenTile) && !playerOne.myTiles.includes(chosenTile)) {
+            playerTwo.myTurn = false;
+            playerOne.myTurn = true;
+            playerTwo.myTiles.push(chosenTile);
+            console.log(`player two move, myTiles: ${playerTwo.myTiles}`);
+        }
+
     }
+    //console.log(target);
 }
 /*
 obviously you should have a factory function to create two players, playerOne and playerTwo
