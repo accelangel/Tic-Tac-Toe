@@ -62,14 +62,26 @@ const gameHandler = function (target) {
     let chosenTile = target.tile;
     console.log(chosenTile);
     // now you need something to find out whose turn it is
-    let playerOneTurn = module.players.playerOne.myTurn;
-    let playerTwoTurn = module.players.playerTwo.myTurn;
-    if (playerOneTurn == true) {
+    let playerOne = module.players.playerOne;
+    let playerTwo = module.players.playerTwo;
+    if (playerOne.myTurn === true) {
         // okay here a few things need to happen
         // first playerOneTurn should be set to false, and the opposite for playerTwoTurn
         // next the selected tile needs to be added into the myTile array for that player
         // then some kind of update display function needs to be invoked
         // lets commit here though, thats far enough
+        playerOne.myTurn = false;
+        playerTwo.myTurn = true;
+        playerOne.myTiles.push(chosenTile);
+        console.log('player one move');
+        console.log(target);
+    }
+    else {
+        playerTwo.myTurn = false;
+        playerOne.myTurn = true;
+        playerTwo.myTiles.push(chosenTile);
+        console.log('player two move');
+        console.log(target);
     }
 }
 /*
