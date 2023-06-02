@@ -51,3 +51,11 @@ h1 {
 .infoContainer span {
     font-weight: bold;
 }
+
+.board .markX {
+    background-color: #fbd471;
+}
+
+.board .markO {
+    background-color: #f98181;
+}

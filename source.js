@@ -7,7 +7,7 @@
 */
 
 //start with a module (IIFE), that will populate the board with tiles
-const module = (function () {
+const game = (function () {
     const createBoard = function () {
         const board = [];
         for (t = 1; t < 10; t++) {
@@ -50,25 +50,37 @@ const module = (function () {
 
     let players = playerFactory();
 
+    const refreshDOM = function (tile, player) {
+        console.log(tile, player);
+        let domTarget = document.querySelector(`.${tile}`);
+        if(player === 'playerOne') {
+            domTarget.classList.add('markX');
+        }
+        else {
+            domTarget.classList.add('markO');
+        }
+    }
+
     populateBoard();
     eventCreator();
 
-    return { createBoard, gameboard, populateBoard, playerFactory, players };
+    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshDOM };
 
 })();
 
-const gameHandler = function (target) {
+const gameHandler = function (target, player) {
     let chosenTile = target.tile;
-    let playerOne = module.players.playerOne;
-    let playerTwo = module.players.playerTwo;
+    let playerOne = game.players.playerOne;
+    let playerTwo = game.players.playerTwo;
     if (playerOne.myTurn === true &&
         !playerOne.myTiles.includes(chosenTile) &&
         !playerTwo.myTiles.includes(chosenTile)) {
         playerOne.myTurn = false;
         playerTwo.myTurn = true;
         playerOne.myTiles.push(chosenTile);
-        console.log(`player one move, myTiles: ${playerOne.myTiles}`);
+        //console.log(`player one move, myTiles: ${playerOne.myTiles}`);
         target.value = 'X';
+        game.refreshDOM(chosenTile, 'playerOne');
     }
     else {
         if (!playerTwo.myTiles.includes(chosenTile) &&
@@ -76,12 +88,11 @@ const gameHandler = function (target) {
             playerTwo.myTurn = false;
             playerOne.myTurn = true;
             playerTwo.myTiles.push(chosenTile);
-            console.log(`player two move, myTiles: ${playerTwo.myTiles}`);
+            //console.log(`player two move, myTiles: ${playerTwo.myTiles}`);
             target.value = 'O';
+            game.refreshDOM(chosenTile, 'playerTwo');
         };
     };
-    //run some kind of displayUpdater function (choose better name) to update the DOM
-    // with values from the tile
 }
 /*
 obviously you should have a factory function to create two players, playerOne and playerTwo
