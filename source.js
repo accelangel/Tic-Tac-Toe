@@ -42,19 +42,50 @@ const module = (function () {
         };
     };
 
+    const playerFactory = function () {
+        const playerOne = { myTurn: true, myTiles: [] };
+        const playerTwo = { myTurn: false, myTiles: [] };
+        return { playerOne, playerTwo }
+    }
+
+    let players = playerFactory();
+
     populateBoard();
     eventCreator();
 
-    return {
-        createBoard, gameboard, populateBoard
-    };
+    return { createBoard, gameboard, populateBoard, playerFactory, players };
 
 })();
 
 const gameHandler = function (target) {
-    console.log(target);
-
+    // take target.tile and assign it to a variable, like chosenTile
+    let chosenTile = target.tile;
+    console.log(chosenTile);
+    // now you need something to find out whose turn it is
+    let playerOneTurn = module.players.playerOne.myTurn;
+    let playerTwoTurn = module.players.playerTwo.myTurn;
+    if (playerOneTurn == true) {
+        // okay here a few things need to happen
+        // first playerOneTurn should be set to false, and the opposite for playerTwoTurn
+        // next the selected tile needs to be added into the myTile array for that player
+        // then some kind of update display function needs to be invoked
+        // lets commit here though, thats far enough
+    }
 }
+/*
+obviously you should have a factory function to create two players, playerOne and playerTwo
+later down the line if you have a computer to play against, that computer can just take over playTwo's object
+-now that i think about it, player can be one object called players, that stores two player objects....aw snap
+
+
+you will need a gameHandler to control whose "turn" it is
+based on whose turn it is and which tile they clicked, the tile should turn a certain color
+any click on the gameHandler should switch whose turn it is
+and the player object should be given a value according to the tile they clicked
+
+the display needs to be updated with the new values on the tile object as well
+
+then eventually at the end of the gameHandler, a check for winner function can be run, but we will get to that later
 
 
 
@@ -72,22 +103,4 @@ const gameHandler = function (target) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
