@@ -32,16 +32,12 @@ const module = (function () {
         };
     };
 
-    const eventHandler = function (target) {
-        console.log(target);
-    }
-
     const eventCreator = function () {
         for (obj of gameboard.board) {
             let target = document.querySelector(`.${obj.tile}`);
             let temp = obj;
             target.addEventListener('click', function () {
-                eventHandler(temp);
+                gameHandler(temp);
             });
         };
     };
@@ -55,7 +51,10 @@ const module = (function () {
 
 })();
 
+const gameHandler = function (target) {
+    console.log(target);
 
+}
 
 
 
