@@ -58,13 +58,9 @@ const module = (function () {
 })();
 
 const gameHandler = function (target) {
-    // take target.tile and assign it to a variable, like chosenTile
     let chosenTile = target.tile;
-    //console.log(chosenTile);
-    // now you need something to find out whose turn it is
     let playerOne = module.players.playerOne;
     let playerTwo = module.players.playerTwo;
-
     if (playerOne.myTurn === true &&
         !playerOne.myTiles.includes(chosenTile) &&
         !playerTwo.myTiles.includes(chosenTile)) {
@@ -82,10 +78,10 @@ const gameHandler = function (target) {
             playerTwo.myTiles.push(chosenTile);
             console.log(`player two move, myTiles: ${playerTwo.myTiles}`);
             target.value = 'O';
-        }
-
-    }
-    console.log(target);
+        };
+    };
+    //run some kind of displayUpdater function (choose better name) to update the DOM
+    // with values from the tile
 }
 /*
 obviously you should have a factory function to create two players, playerOne and playerTwo
