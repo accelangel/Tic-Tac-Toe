@@ -72,8 +72,8 @@ const gameHandler = function (target) {
         playerTwo.myTurn = true;
         playerOne.myTiles.push(chosenTile);
         console.log(`player one move, myTiles: ${playerOne.myTiles}`);
+        target.value = 'X';
     }
-
     else {
         if (!playerTwo.myTiles.includes(chosenTile) &&
             !playerOne.myTiles.includes(chosenTile)) {
@@ -81,10 +81,11 @@ const gameHandler = function (target) {
             playerOne.myTurn = true;
             playerTwo.myTiles.push(chosenTile);
             console.log(`player two move, myTiles: ${playerTwo.myTiles}`);
+            target.value = 'O';
         }
 
     }
-    //console.log(target);
+    console.log(target);
 }
 /*
 obviously you should have a factory function to create two players, playerOne and playerTwo
