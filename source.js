@@ -64,16 +64,19 @@ const gameHandler = function (target) {
     // now you need something to find out whose turn it is
     let playerOne = module.players.playerOne;
     let playerTwo = module.players.playerTwo;
-    if (playerOne.myTurn === true) {
-        if (!playerOne.myTiles.includes(chosenTile) && !playerTwo.myTiles.includes(chosenTile)) {
-            playerOne.myTurn = false;
-            playerTwo.myTurn = true;
-            playerOne.myTiles.push(chosenTile);
-            console.log(`player one move, myTiles: ${playerOne.myTiles}`);
-        }
+
+    if (playerOne.myTurn === true &&
+        !playerOne.myTiles.includes(chosenTile) &&
+        !playerTwo.myTiles.includes(chosenTile)) {
+        playerOne.myTurn = false;
+        playerTwo.myTurn = true;
+        playerOne.myTiles.push(chosenTile);
+        console.log(`player one move, myTiles: ${playerOne.myTiles}`);
     }
+
     else {
-        if (!playerTwo.myTiles.includes(chosenTile) && !playerOne.myTiles.includes(chosenTile)) {
+        if (!playerTwo.myTiles.includes(chosenTile) &&
+            !playerOne.myTiles.includes(chosenTile)) {
             playerTwo.myTurn = false;
             playerOne.myTurn = true;
             playerTwo.myTiles.push(chosenTile);
