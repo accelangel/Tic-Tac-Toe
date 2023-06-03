@@ -75,15 +75,31 @@ const game = (function () {
     function rowCondition(board) {
         for (row of board) {
             if (row.every((mark) => mark === 'X') || row.every((mark) => mark === 'O')) {
+                console.log('row win')
                 return true;
             }
-            else { return false };
+            else {
+                return false
+            }
         };
     };
 
     function colCondition(board) {
+        let c1 = [], c2 = [], c3 = [];
         for (row of board) {
-             
+            c1.push(row[0]);
+            c2.push(row[1]);
+            c3.push(row[2]);
+        }
+        let columns = [c1, c2, c3];
+        for (col of columns) {
+            if (col.every((mark) => mark === 'X') || col.every((mark) => mark === 'O')) {
+                console.log('column win');
+                return true;
+            }
+            else {
+                return false;
+            };
         };
     };
 
@@ -91,8 +107,9 @@ const game = (function () {
         let cell = target.tile.slice(-1);
         let marker = target.value;
         cellDrop(cell, marker);
-        let rowWin = rowCondition(board);
-        let colWin = colCondition(board);
+        rowCondition(board);
+        colCondition(board);
+        //console.log(`Row Win: ${rowWin} | Column Win: ${colWin}`);
     }
 
 
