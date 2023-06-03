@@ -74,8 +74,10 @@ const game = (function () {
 
     function rowCondition(board) {
         for (row of board) {
+            // you have a bug here
+            // the only row condition that works is the top row, the middle and bottom
+            // row win conditons do not work
             if (row.every((mark) => mark === 'X') || row.every((mark) => mark === 'O')) {
-                console.log('row win')
                 return true;
             }
             else {
@@ -94,7 +96,6 @@ const game = (function () {
         let columns = [c1, c2, c3];
         for (col of columns) {
             if (col.every((mark) => mark === 'X') || col.every((mark) => mark === 'O')) {
-                console.log('column win');
                 return true;
             }
             else {
@@ -107,9 +108,9 @@ const game = (function () {
         let cell = target.tile.slice(-1);
         let marker = target.value;
         cellDrop(cell, marker);
-        rowCondition(board);
-        colCondition(board);
-        //console.log(`Row Win: ${rowWin} | Column Win: ${colWin}`);
+        let rowWin = rowCondition(board);
+        let colWin = colCondition(board);
+        console.log(`Row Win: ${rowWin} | Column Win: ${colWin}`);
     }
 
 
