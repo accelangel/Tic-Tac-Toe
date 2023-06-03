@@ -112,8 +112,14 @@ const game = (function () {
         let rowWin = winConditions(board);
         let colWin = winConditions(colCondition(board));
         let diagWin = winConditions(diagCondition(board));
-        console.log(`Row Win: ${rowWin} | Column Win: ${colWin} | Diaganol Win: ${diagWin}`);
-    }
+        //console.log(`Row Win: ${rowWin} | Column Win: ${colWin} | Diaganol Win: ${diagWin}`);
+        if (rowWin === true || colWin == true || diagWin === true) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
 
 
     populateBoard();
@@ -144,7 +150,15 @@ const gameHandler = function (target) {
         };
     };
     //check for a winner here
-    game.victoryCheck(target);
+    let victory = game.victoryCheck(target);
+    if (victory === true) {
+        if (target.value === 'X') {
+            console.log('yellow wins!')
+        }
+        else {
+            console.log('red wins!')
+        }
+    }
 }
 /*
 obviously you should have a factory function to create two players, playerOne and playerTwo
