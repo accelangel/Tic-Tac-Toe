@@ -77,14 +77,14 @@ const game = (function () {
             let xWin = row.every((mark) => mark === 'X');
             let oWin = row.every((mark) => mark === 'O');
         }
-        
+
     }
 
     const victoryCheck = function (tile) {
         let cell = tile.tile.slice(-1);
         let marker = tile.value;
         cellDrop(cell, marker);
-        //console.log(board);
+        console.log(board);
         rowCondition(board);
     }
 
@@ -100,15 +100,15 @@ const gameHandler = function (target) {
     let chosenTile = target.tile;
     let playerOne = game.players.playerOne;
     let playerTwo = game.players.playerTwo;
-    if (playerOne.myTurn === true && target.taken === false) {
-        playerOne.myTurn = false;
-        playerTwo.myTurn = true;
-        playerOne.myTiles.push(chosenTile);
-        target.value = 'X';
-        game.refreshDOM(chosenTile, 'playerOne');
-    }
-    else {
-        if (target.taken === false) {
+    if (target.taken === false) {
+        if (playerOne.myTurn === true) {
+            playerOne.myTurn = false;
+            playerTwo.myTurn = true;
+            playerOne.myTiles.push(chosenTile);
+            target.value = 'X';
+            game.refreshDOM(chosenTile, 'playerOne');
+        }
+        else {
             playerTwo.myTurn = false;
             playerOne.myTurn = true;
             playerTwo.myTiles.push(chosenTile);
@@ -116,6 +116,7 @@ const gameHandler = function (target) {
             game.refreshDOM(chosenTile, 'playerTwo');
         };
     };
+
     //check for a winner here
     game.victoryCheck(target);
 }
