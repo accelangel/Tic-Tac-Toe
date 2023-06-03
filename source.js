@@ -60,10 +60,39 @@ const game = (function () {
         }
     }
 
+    let board = [
+        ['-', '-', '-'],
+        ['-', '-', '-'],
+        ['-', '-', '-']
+    ];
+
+    function cellDrop(cell, marker) {
+        let row = Math.floor((cell - 1) / 3);
+        let col = (cell - 1) % 3;
+        board[row][col] = marker;
+    }
+
+    function rowCondition(board) {
+        for (row of board) {
+            let xWin = row.every((mark) => mark === 'X');
+            let oWin = row.every((mark) => mark === 'O');
+        }
+        
+    }
+
+    const victoryCheck = function (tile) {
+        let cell = tile.tile.slice(-1);
+        let marker = tile.value;
+        cellDrop(cell, marker);
+        //console.log(board);
+        rowCondition(board);
+    }
+
+
     populateBoard();
     eventCreator();
 
-    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshDOM, /*victoryCheck*/ };
+    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshDOM, victoryCheck };
 
 })();
 
@@ -88,7 +117,7 @@ const gameHandler = function (target) {
         };
     };
     //check for a winner here
-    //game.victoryCheck(target);
+    game.victoryCheck(target);
 }
 /*
 obviously you should have a factory function to create two players, playerOne and playerTwo
