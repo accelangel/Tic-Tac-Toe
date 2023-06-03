@@ -75,7 +75,7 @@ const game = (function () {
     function rowCondition(board) {
         let result = false;
         for (row of board) {
-            if(row.every((mark) => mark === 'X') || row.every((mark) => mark === 'O')) {
+            if (row.every((mark) => mark === 'X') || row.every((mark) => mark === 'O')) {
                 result = true;
                 break;
             }
@@ -90,17 +90,34 @@ const game = (function () {
             c2.push(row[1]);
             c3.push(row[2]);
         }
-        // you also have a bug here, similar to the row bug
-        // the only column condition that works is the first column
         let columns = [c1, c2, c3];
-        let temp = false;
+        let result = false;
         for (col of columns) {
             if (col.every((mark) => mark === 'X') || col.every((mark) => mark === 'O')) {
-                temp = true;
+                result = true;
             }
         };
-        return temp;
+        return result;
     };
+
+    function diagCondition(board) {
+        let d1 = [], d2 = [];
+        let t = 2;
+        for (i = 0; i < 3; i++) {
+            d1.push(board[i][i]);
+            d2.push(board[i][t])
+            t--;
+        }
+        let diagonals = [d1, d2];
+        let result = false;
+        for (diag of diagonals) {
+            if (diag.every((mark) => mark === 'X') || diag.every((mark) => mark === 'O')) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 
     const victoryCheck = function (target) {
         let cell = target.tile.slice(-1);
@@ -108,7 +125,8 @@ const game = (function () {
         cellDrop(cell, marker);
         let rowWin = rowCondition(board);
         let colWin = colCondition(board);
-        console.log(`Row Win: ${rowWin} | Column Win: ${colWin}`);
+        let diagWin = diagCondition(board);
+        console.log(`Row Win: ${rowWin} | Column Win: ${colWin} | Diaganol Win: ${diagWin}`);
     }
 
 
