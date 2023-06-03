@@ -74,18 +74,25 @@ const game = (function () {
 
     function rowCondition(board) {
         for (row of board) {
-            let xWin = row.every((mark) => mark === 'X');
-            let oWin = row.every((mark) => mark === 'O');
-        }
+            if (row.every((mark) => mark === 'X') || row.every((mark) => mark === 'O')) {
+                return true;
+            }
+            else { return false };
+        };
+    };
 
-    }
+    function colCondition(board) {
+        for (row of board) {
+             
+        };
+    };
 
-    const victoryCheck = function (tile) {
-        let cell = tile.tile.slice(-1);
-        let marker = tile.value;
+    const victoryCheck = function (target) {
+        let cell = target.tile.slice(-1);
+        let marker = target.value;
         cellDrop(cell, marker);
-        console.log(board);
-        rowCondition(board);
+        let rowWin = rowCondition(board);
+        let colWin = colCondition(board);
     }
 
 
@@ -116,7 +123,6 @@ const gameHandler = function (target) {
             game.refreshDOM(chosenTile, 'playerTwo');
         };
     };
-
     //check for a winner here
     game.victoryCheck(target);
 }
