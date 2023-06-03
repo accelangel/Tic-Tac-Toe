@@ -51,9 +51,8 @@ const game = (function () {
     let players = playerFactory();
 
     const refreshDOM = function (tile, player) {
-        console.log(tile, player);
         let domTarget = document.querySelector(`.${tile}`);
-        if(player === 'playerOne') {
+        if (player === 'playerOne') {
             domTarget.classList.add('markX');
         }
         else {
@@ -64,35 +63,32 @@ const game = (function () {
     populateBoard();
     eventCreator();
 
-    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshDOM };
+    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshDOM, /*victoryCheck*/ };
 
 })();
 
-const gameHandler = function (target, player) {
+const gameHandler = function (target) {
     let chosenTile = target.tile;
     let playerOne = game.players.playerOne;
     let playerTwo = game.players.playerTwo;
-    if (playerOne.myTurn === true &&
-        !playerOne.myTiles.includes(chosenTile) &&
-        !playerTwo.myTiles.includes(chosenTile)) {
+    if (playerOne.myTurn === true && target.taken === false) {
         playerOne.myTurn = false;
         playerTwo.myTurn = true;
         playerOne.myTiles.push(chosenTile);
-        //console.log(`player one move, myTiles: ${playerOne.myTiles}`);
         target.value = 'X';
         game.refreshDOM(chosenTile, 'playerOne');
     }
     else {
-        if (!playerTwo.myTiles.includes(chosenTile) &&
-            !playerOne.myTiles.includes(chosenTile)) {
+        if (target.taken === false) {
             playerTwo.myTurn = false;
             playerOne.myTurn = true;
             playerTwo.myTiles.push(chosenTile);
-            //console.log(`player two move, myTiles: ${playerTwo.myTiles}`);
             target.value = 'O';
             game.refreshDOM(chosenTile, 'playerTwo');
         };
     };
+    //check for a winner here
+    //game.victoryCheck(target);
 }
 /*
 obviously you should have a factory function to create two players, playerOne and playerTwo
