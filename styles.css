@@ -59,3 +59,7 @@ h1 {
 .board .markO {
     background-color: #f98181;
 }
+
+.winner {
+    font-weight: bold;
+}

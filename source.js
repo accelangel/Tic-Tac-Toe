@@ -128,10 +128,15 @@ const game = (function () {
         playerStatus.textContent = player;
     };
 
+    const victory = function (winner) {
+        gameStatus.classList.add('winner');
+        gameStatus.textContent = `${winner} wins!`;
+    }
+
     populateBoard();
     eventCreator();
 
-    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshTiles, victoryCheck, turnUpdate };
+    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshTiles, victoryCheck, turnUpdate, victory };
 
 })();
 
@@ -162,11 +167,11 @@ const gameHandler = function (target) {
     if (victory === true) {
         if (target.value === 'X') {
             console.log('yellow wins!')
-            //victory('Player 1');
+            game.victory('Player 1');
         }
         else {
             console.log('red wins!')
-            //victory('Player 2');
+            game.victory('Player 2');
         }
     }
 }
