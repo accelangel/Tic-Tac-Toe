@@ -35,9 +35,9 @@ const game = (function () {
     const eventCreator = function () {
         for (obj of gameboard.board) {
             let target = document.querySelector(`.${obj.tile}`);
-            let temp = obj;
+            let instance = obj;
             target.addEventListener('click', function () {
-                gameHandler(temp);
+                gameHandler(instance);
             });
         };
     };
@@ -133,47 +133,66 @@ const game = (function () {
         gameStatus.textContent = `${winner} wins!`;
     }
 
+    let gameOver = false;
+
     populateBoard();
     eventCreator();
 
-    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshTiles, victoryCheck, turnUpdate, victory };
-
+    return {
+        createBoard,
+        gameboard,
+        populateBoard,
+        playerFactory,
+        players,
+        refreshTiles,
+        victoryCheck,
+        turnUpdate,
+        victory,
+        gameOver
+    };
 })();
 
 const gameHandler = function (target) {
-    let chosenTile = target.tile;
-    let playerOne = game.players.playerOne;
-    let playerTwo = game.players.playerTwo;
-    if (target.taken === false) {
-        if (playerOne.myTurn === true) {
-            playerOne.myTurn = false;
-            playerTwo.myTurn = true;
-            playerOne.myTiles.push(chosenTile);
-            target.value = 'X';
-            game.refreshTiles(chosenTile, 'playerOne');
-            game.turnUpdate('Player 2');
-        }
-        else {
-            playerTwo.myTurn = false;
-            playerOne.myTurn = true;
-            playerTwo.myTiles.push(chosenTile);
-            target.value = 'O';
-            game.refreshTiles(chosenTile, 'playerTwo');
-            game.turnUpdate('Player 1');
+    if (game.gameOver === false) {
+        let chosenTile = target.tile;
+        let playerOne = game.players.playerOne;
+        let playerTwo = game.players.playerTwo;
+        if (target.taken === false) {
+            if (playerOne.myTurn === true) {
+                playerOne.myTurn = false;
+                playerTwo.myTurn = true;
+                playerOne.myTiles.push(chosenTile);
+                target.value = 'X';
+                game.refreshTiles(chosenTile, 'playerOne');
+                game.turnUpdate('Player 2');
+            }
+            else {
+                playerTwo.myTurn = false;
+                playerOne.myTurn = true;
+                playerTwo.myTiles.push(chosenTile);
+                target.value = 'O';
+                game.refreshTiles(chosenTile, 'playerTwo');
+                game.turnUpdate('Player 1');
+            };
         };
-    };
-    //check for a winner here
-    let victory = game.victoryCheck(target);
-    if (victory === true) {
-        if (target.value === 'X') {
-            console.log('yellow wins!')
-            game.victory('Player 1');
-        }
-        else {
-            console.log('red wins!')
-            game.victory('Player 2');
+        //check for a winner here
+        let victory = game.victoryCheck(target);
+        if (victory === true) {
+            if (target.value === 'X') {
+                console.log('yellow wins!')
+                game.victory('Player 1');
+            }
+            else {
+                console.log('red wins!')
+                game.victory('Player 2');
+            }
+            game.gameOver = true;
         }
     }
+    else {
+        // options to reset the game etc
+    }
+
 }
 /*
 obviously you should have a factory function to create two players, playerOne and playerTwo
