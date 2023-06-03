@@ -74,7 +74,6 @@ const game = (function () {
 
     function rowCondition(board) {
         let result = false;
-        console.log(board);
         for (row of board) {
             if(row.every((mark) => mark === 'X') || row.every((mark) => mark === 'O')) {
                 result = true;
@@ -94,14 +93,13 @@ const game = (function () {
         // you also have a bug here, similar to the row bug
         // the only column condition that works is the first column
         let columns = [c1, c2, c3];
+        let temp = false;
         for (col of columns) {
             if (col.every((mark) => mark === 'X') || col.every((mark) => mark === 'O')) {
-                return true;
+                temp = true;
             }
-            else {
-                return false;
-            };
         };
+        return temp;
     };
 
     const victoryCheck = function (target) {
