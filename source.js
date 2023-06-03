@@ -73,17 +73,15 @@ const game = (function () {
     }
 
     function rowCondition(board) {
+        let result = false;
+        console.log(board);
         for (row of board) {
-            // you have a bug here
-            // the only row condition that works is the top row, the middle and bottom
-            // row win conditons do not work
-            if (row.every((mark) => mark === 'X') || row.every((mark) => mark === 'O')) {
-                return true;
+            if(row.every((mark) => mark === 'X') || row.every((mark) => mark === 'O')) {
+                result = true;
+                break;
             }
-            else {
-                return false
-            }
-        };
+        }
+        return result;
     };
 
     function colCondition(board) {
@@ -93,6 +91,8 @@ const game = (function () {
             c2.push(row[1]);
             c3.push(row[2]);
         }
+        // you also have a bug here, similar to the row bug
+        // the only column condition that works is the first column
         let columns = [c1, c2, c3];
         for (col of columns) {
             if (col.every((mark) => mark === 'X') || col.every((mark) => mark === 'O')) {
