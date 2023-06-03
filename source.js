@@ -72,17 +72,6 @@ const game = (function () {
         board[row][col] = marker;
     }
 
-    function rowCondition(board) {
-        let result = false;
-        for (row of board) {
-            if (row.every((mark) => mark === 'X') || row.every((mark) => mark === 'O')) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    };
-
     function colCondition(board) {
         let c1 = [], c2 = [], c3 = [];
         for (row of board) {
@@ -91,13 +80,7 @@ const game = (function () {
             c3.push(row[2]);
         }
         let columns = [c1, c2, c3];
-        let result = false;
-        for (col of columns) {
-            if (col.every((mark) => mark === 'X') || col.every((mark) => mark === 'O')) {
-                result = true;
-            }
-        };
-        return result;
+        return columns;
     };
 
     function diagCondition(board) {
@@ -109,13 +92,16 @@ const game = (function () {
             t--;
         }
         let diagonals = [d1, d2];
+        return diagonals;
+    }
+
+    function winConditions(array) {
         let result = false;
-        for (diag of diagonals) {
-            if (diag.every((mark) => mark === 'X') || diag.every((mark) => mark === 'O')) {
+        for (arr of array) {
+            if (arr.every((mark) => mark === 'X') || arr.every((mark) => mark === 'O')) {
                 result = true;
-                break;
             }
-        }
+        };
         return result;
     }
 
@@ -123,9 +109,9 @@ const game = (function () {
         let cell = target.tile.slice(-1);
         let marker = target.value;
         cellDrop(cell, marker);
-        let rowWin = rowCondition(board);
-        let colWin = colCondition(board);
-        let diagWin = diagCondition(board);
+        let rowWin = winConditions(board);
+        let colWin = winConditions(colCondition(board));
+        let diagWin = winConditions(diagCondition(board));
         console.log(`Row Win: ${rowWin} | Column Win: ${colWin} | Diaganol Win: ${diagWin}`);
     }
 
