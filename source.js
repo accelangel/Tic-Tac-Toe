@@ -50,7 +50,7 @@ const game = (function () {
 
     let players = playerFactory();
 
-    const refreshDOM = function (tile, player) {
+    const refreshTiles = function (tile, player) {
         let domTarget = document.querySelector(`.${tile}`);
         if (player === 'playerOne') {
             domTarget.classList.add('markX');
@@ -121,11 +121,17 @@ const game = (function () {
         }
     };
 
+    const gameStatus = document.querySelector('.gameStatus');
+    const playerStatus = document.querySelector('.playerStatus');
+
+    const turnUpdate = function (player) {
+        playerStatus.textContent = player;
+    };
 
     populateBoard();
     eventCreator();
 
-    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshDOM, victoryCheck };
+    return { createBoard, gameboard, populateBoard, playerFactory, players, refreshTiles, victoryCheck, turnUpdate };
 
 })();
 
@@ -139,14 +145,16 @@ const gameHandler = function (target) {
             playerTwo.myTurn = true;
             playerOne.myTiles.push(chosenTile);
             target.value = 'X';
-            game.refreshDOM(chosenTile, 'playerOne');
+            game.refreshTiles(chosenTile, 'playerOne');
+            game.turnUpdate('Player 2');
         }
         else {
             playerTwo.myTurn = false;
             playerOne.myTurn = true;
             playerTwo.myTiles.push(chosenTile);
             target.value = 'O';
-            game.refreshDOM(chosenTile, 'playerTwo');
+            game.refreshTiles(chosenTile, 'playerTwo');
+            game.turnUpdate('Player 1');
         };
     };
     //check for a winner here
@@ -154,9 +162,11 @@ const gameHandler = function (target) {
     if (victory === true) {
         if (target.value === 'X') {
             console.log('yellow wins!')
+            //victory('Player 1');
         }
         else {
             console.log('red wins!')
+            //victory('Player 2');
         }
     }
 }
