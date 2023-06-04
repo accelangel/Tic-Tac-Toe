@@ -9,7 +9,12 @@ const resetGame = function () {
     game.players = game.playerFactory();
     game.gameOver = false;
     game.resetStatus();
-}
+    for (i = 1; i < 10; i++) {
+        let target = document.querySelector(`.tile${i}`);
+        target.textContent = '';
+    };
+    game.takenTiles = [];
+};
 
 const resetButton = document.querySelector('.resetButton');
 resetButton.addEventListener('click', resetGame);
@@ -144,10 +149,13 @@ const game = (function () {
 
     const victory = function (winner) {
         if (winner === 'Tie') {
+            gameStatus.classList.add('winner');
+            gameStatus.textContent = `Tie Game!`;
+        }
+        else {
+            gameStatus.classList.add('winner');
             gameStatus.textContent = `${winner} wins!`;
         }
-        gameStatus.classList.add('winner');
-        gameStatus.textContent = `${winner} wins!`;
     }
 
     const resetStatus = function () {
@@ -158,7 +166,7 @@ const game = (function () {
 
     let gameOver = false;
 
-    let takenTiles = 0;
+    let takenTiles = [];
 
     populateBoard();
     eventCreator();
@@ -182,48 +190,50 @@ const game = (function () {
 })();
 
 const gameHandler = function (target) {
-    game.takenTiles += 1;
-    if (game.gameOver === false) {
-        let chosenTile = target.tile;
-        let playerOne = game.players.playerOne;
-        let playerTwo = game.players.playerTwo;
-        if (target.taken === false) {
-            if (playerOne.myTurn === true) {
-                playerOne.myTurn = false;
-                playerTwo.myTurn = true;
-                playerOne.myTiles.push(chosenTile);
-                target.value = 'X';
-                game.refreshTiles(chosenTile, 'playerOne');
-                game.turnUpdate('Player 2');
-            }
-            else {
-                playerTwo.myTurn = false;
-                playerOne.myTurn = true;
-                playerTwo.myTiles.push(chosenTile);
-                target.value = 'O';
-                game.refreshTiles(chosenTile, 'playerTwo');
-                game.turnUpdate('Player 1');
+    if (!game.takenTiles.includes(target.tile)) {
+        game.takenTiles.push(target.tile);
+        if (game.gameOver === false) {
+            let chosenTile = target.tile;
+            let playerOne = game.players.playerOne;
+            let playerTwo = game.players.playerTwo;
+            if (target.taken === false) {
+                if (playerOne.myTurn === true) {
+                    playerOne.myTurn = false;
+                    playerTwo.myTurn = true;
+                    playerOne.myTiles.push(chosenTile);
+                    target.value = 'X';
+                    game.refreshTiles(chosenTile, 'playerOne');
+                    game.turnUpdate('Player 2');
+                }
+                else {
+                    playerTwo.myTurn = false;
+                    playerOne.myTurn = true;
+                    playerTwo.myTiles.push(chosenTile);
+                    target.value = 'O';
+                    game.refreshTiles(chosenTile, 'playerTwo');
+                    game.turnUpdate('Player 1');
+                };
             };
-        };
-        let victory = game.victoryCheck(target);
-        if (victory === true) {
+            let victory = game.victoryCheck(target);
+            if (victory === true) {
 
-            if (target.value === 'X') {
-                console.log('yellow wins!')
-                game.victory('Player 1');
+                if (target.value === 'X') {
+                    console.log('yellow wins!')
+                    game.victory('Player 1');
+                }
+                else {
+                    console.log('red wins!')
+                    game.victory('Player 2');
+                }
+                game.gameOver = true;
+                resetButton.classList.toggle('displayToggle');
             }
             else {
-                console.log('red wins!')
-                game.victory('Player 2');
+                if (game.takenTiles.length === 9) {
+                    game.victory('Tie');
+                    resetButton.classList.toggle('displayToggle');
+                }
             }
-            game.gameOver = true;
-            resetButton.classList.toggle('displayToggle');
-        }
-        else {
-            if (game.takenTiles === 9) {
-                game.victory('Tie');
-            }
-            resetButton.classList.toggle('displayToggle');
         }
     }
 }
