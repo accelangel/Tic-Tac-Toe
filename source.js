@@ -8,6 +8,7 @@ const resetGame = function () {
     }
     game.players = game.playerFactory();
     game.gameOver = false;
+    game.resetStatus();
 }
 
 const resetButton = document.querySelector('.resetButton');
@@ -37,7 +38,7 @@ const game = (function () {
             board.append(tileElement);
         };
     };
-    
+
     const eventCreator = function () {
         for (obj of gameboard.board) {
             let target = document.querySelector(`.${obj.tile}`);
@@ -131,8 +132,9 @@ const game = (function () {
         }
     };
 
-    const gameStatus = document.querySelector('.gameStatus');
-    const playerStatus = document.querySelector('.playerStatus');
+    let gameStatus = document.querySelector('.gameStatus');
+    let playerStatus = document.querySelector('.playerStatus');
+    const infoContainer = document.querySelector('.infoContainer');
 
     const turnUpdate = function (player) {
         playerStatus.textContent = player;
@@ -141,6 +143,12 @@ const game = (function () {
     const victory = function (winner) {
         gameStatus.classList.add('winner');
         gameStatus.textContent = `${winner} wins!`;
+    }
+
+    const resetStatus = function () {
+        infoContainer.innerHTML = '<p class="gameStatus"><Span class="playerStatus">Player 1</Span>, make your move</p>';
+        gameStatus = document.querySelector('.gameStatus');
+        playerStatus = document.querySelector('.playerStatus');
     }
 
     let gameOver = false;
@@ -158,7 +166,10 @@ const game = (function () {
         victoryCheck,
         turnUpdate,
         victory,
-        gameOver
+        gameOver,
+        playerStatus,
+        gameStatus,
+        resetStatus
     };
 })();
 
