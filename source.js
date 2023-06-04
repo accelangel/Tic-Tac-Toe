@@ -7,6 +7,22 @@
 */
 
 //start with a module (IIFE), that will populate the board with tiles
+const resetGame = function () {
+    resetButton.classList.toggle('displayToggle');
+    game.gameboard = game.createBoard();
+    for (obj of game.gameboard.board) {
+        let target = document.querySelector(`.${obj.tile}`);
+        target.classList.remove('markX');
+        target.classList.remove('markO');
+    }
+    game.players = game.playerFactory();
+    game.gameOver = false;
+}
+
+
+const resetButton = document.querySelector('.resetButton');
+resetButton.addEventListener('click', resetGame);
+
 const game = (function () {
     const createBoard = function () {
         const board = [];
@@ -31,7 +47,7 @@ const game = (function () {
             board.append(tileElement);
         };
     };
-
+    
     const eventCreator = function () {
         for (obj of gameboard.board) {
             let target = document.querySelector(`.${obj.tile}`);
@@ -100,6 +116,11 @@ const game = (function () {
         for (arr of array) {
             if (arr.every((mark) => mark === 'X') || arr.every((mark) => mark === 'O')) {
                 result = true;
+                board = [
+                    ['-', '-', '-'],
+                    ['-', '-', '-'],
+                    ['-', '-', '-']
+                ];
             }
         };
         return result;
@@ -152,6 +173,7 @@ const game = (function () {
     };
 })();
 
+
 const gameHandler = function (target) {
     if (game.gameOver === false) {
         let chosenTile = target.tile;
@@ -178,6 +200,7 @@ const gameHandler = function (target) {
         //check for a winner here
         let victory = game.victoryCheck(target);
         if (victory === true) {
+
             if (target.value === 'X') {
                 console.log('yellow wins!')
                 game.victory('Player 1');
@@ -187,13 +210,15 @@ const gameHandler = function (target) {
                 game.victory('Player 2');
             }
             game.gameOver = true;
+            resetButton.classList.toggle('displayToggle');
         }
     }
     else {
         // options to reset the game etc
     }
-
 }
+
+
 /*
 obviously you should have a factory function to create two players, playerOne and playerTwo
 later down the line if you have a computer to play against, that computer can just take over playTwo's object

@@ -63,3 +63,14 @@ h1 {
 .winner {
     font-weight: bold;
 }
+
+.resetButton {
+    padding: 1em 2.5em;
+    border: none;
+    border-radius: 0.25em;
+    background-color: #f87171;
+}
+
+.displayToggle {
+    display: none;
+}
