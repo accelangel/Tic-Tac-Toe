@@ -61,9 +61,11 @@ const game = (function () {
         let domTarget = document.querySelector(`.${tile}`);
         if (player === 'playerOne') {
             domTarget.classList.add('markX');
+            domTarget.textContent = 'X';
         }
         else {
             domTarget.classList.add('markO');
+            domTarget.textContent = 'O';
         }
     }
 

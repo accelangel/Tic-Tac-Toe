@@ -42,6 +42,12 @@ h1 {
 .board .gameTile {
     background-color: #bae6fd;
     border-radius: 0.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(4em + 1em);
+    font-weight: bold;
+    font-family: sans-serif;
 }
 
 .infoContainer {
@@ -54,10 +60,12 @@ h1 {
 
 .board .markX {
     background-color: #fbd471;
+    color: rgb(181, 153, 82);
 }
 
 .board .markO {
     background-color: #f98181;
+    color: rgb(189, 102, 102);
 }
 
 .winner {
