@@ -141,6 +141,9 @@ const game = (function () {
     };
 
     const victory = function (winner) {
+        if (winner === 'Tie') {
+            gameStatus.textContent = `${winner} wins!`;
+        }
         gameStatus.classList.add('winner');
         gameStatus.textContent = `${winner} wins!`;
     }
@@ -152,6 +155,8 @@ const game = (function () {
     }
 
     let gameOver = false;
+
+    let takenTiles = 0;
 
     populateBoard();
     eventCreator();
@@ -169,12 +174,13 @@ const game = (function () {
         gameOver,
         playerStatus,
         gameStatus,
-        resetStatus
+        resetStatus,
+        takenTiles
     };
 })();
 
-
 const gameHandler = function (target) {
+    game.takenTiles += 1;
     if (game.gameOver === false) {
         let chosenTile = target.tile;
         let playerOne = game.players.playerOne;
@@ -209,6 +215,12 @@ const gameHandler = function (target) {
                 game.victory('Player 2');
             }
             game.gameOver = true;
+            resetButton.classList.toggle('displayToggle');
+        }
+        else {
+            if (game.takenTiles === 9) {
+                game.victory('Tie');
+            }
             resetButton.classList.toggle('displayToggle');
         }
     }
