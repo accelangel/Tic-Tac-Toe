@@ -1,12 +1,3 @@
-/*
-- rule of thumb: if you need ONE of something, use a module, if you need multiples, create them with factories
-- sounds like modules for functions and factories for objects?
-- the gameboard is supposed to be stored as an array within a Gameboard object
-- the players are also supposed to be stored in objects
-----------lets see if we can make a console version first, then switch to DOM after----------
-*/
-
-//start with a module (IIFE), that will populate the board with tiles
 const resetGame = function () {
     resetButton.classList.toggle('displayToggle');
     game.gameboard = game.createBoard();
@@ -18,7 +9,6 @@ const resetGame = function () {
     game.players = game.playerFactory();
     game.gameOver = false;
 }
-
 
 const resetButton = document.querySelector('.resetButton');
 resetButton.addEventListener('click', resetGame);
@@ -133,7 +123,6 @@ const game = (function () {
         let rowWin = winConditions(board);
         let colWin = winConditions(colCondition(board));
         let diagWin = winConditions(diagCondition(board));
-        //console.log(`Row Win: ${rowWin} | Column Win: ${colWin} | Diaganol Win: ${diagWin}`);
         if (rowWin === true || colWin == true || diagWin === true) {
             return true;
         }
@@ -197,7 +186,6 @@ const gameHandler = function (target) {
                 game.turnUpdate('Player 1');
             };
         };
-        //check for a winner here
         let victory = game.victoryCheck(target);
         if (victory === true) {
 
@@ -213,41 +201,4 @@ const gameHandler = function (target) {
             resetButton.classList.toggle('displayToggle');
         }
     }
-    else {
-        // options to reset the game etc
-    }
 }
-
-
-/*
-obviously you should have a factory function to create two players, playerOne and playerTwo
-later down the line if you have a computer to play against, that computer can just take over playTwo's object
--now that i think about it, player can be one object called players, that stores two player objects....aw snap
-
-
-you will need a gameHandler to control whose "turn" it is
-based on whose turn it is and which tile they clicked, the tile should turn a certain color
-any click on the gameHandler should switch whose turn it is
-and the player object should be given a value according to the tile they clicked
-
-the display needs to be updated with the new values on the tile object as well
-
-then eventually at the end of the gameHandler, a check for winner function can be run, but we will get to that later
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
