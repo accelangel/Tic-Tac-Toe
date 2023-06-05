@@ -28,8 +28,8 @@ h1 {
 }
 
 .board {
-    height: 50%;
-    width: 50%;
+    height: 50vh;
+    width: 50vh;
     padding: 0.5em;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

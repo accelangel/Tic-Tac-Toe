@@ -16,7 +16,7 @@ const resetGame = function () {
     game.takenTiles = [];
 };
 
-const game = (function () {
+const game = (function () { 
     const createBoard = function () {
         const board = [];
         for (t = 1; t < 10; t++) {
