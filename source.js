@@ -1,5 +1,5 @@
 const resetGame = function () {
-    resetButton.classList.toggle('displayToggle');
+    game.resetButton.classList.toggle('displayToggle');
     game.gameboard = game.createBoard();
     for (obj of game.gameboard.board) {
         let target = document.querySelector(`.${obj.tile}`);
@@ -15,9 +15,6 @@ const resetGame = function () {
     };
     game.takenTiles = [];
 };
-
-const resetButton = document.querySelector('.resetButton');
-resetButton.addEventListener('click', resetGame);
 
 const game = (function () {
     const createBoard = function () {
@@ -168,6 +165,9 @@ const game = (function () {
 
     let takenTiles = [];
 
+    const resetButton = document.querySelector('.resetButton');
+    resetButton.addEventListener('click', resetGame);
+
     populateBoard();
     eventCreator();
 
@@ -185,7 +185,8 @@ const game = (function () {
         playerStatus,
         gameStatus,
         resetStatus,
-        takenTiles
+        takenTiles,
+        resetButton
     };
 })();
 
@@ -226,12 +227,12 @@ const gameHandler = function (target) {
                     game.victory('Player 2');
                 }
                 game.gameOver = true;
-                resetButton.classList.toggle('displayToggle');
+                game.resetButton.classList.toggle('displayToggle');
             }
             else {
                 if (game.takenTiles.length === 9) {
                     game.victory('Tie');
-                    resetButton.classList.toggle('displayToggle');
+                    game.resetButton.classList.toggle('displayToggle');
                 }
             }
         }
